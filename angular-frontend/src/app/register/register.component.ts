@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Customer } from '../customer';
 
 @Component({
   selector: 'app-register',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  customer: Customer = new Customer();
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  goToHome(){
+    this.router.navigate(['/home']);
+  }
+
+  onSubmit(){
+    this.goToHome();
+  }
 }
