@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Customer } from '../customer';
+import { ApiCustomerService } from '../api/api-customer.service';
 
 @Component({
   selector: 'app-register',
@@ -10,16 +11,22 @@ import { Customer } from '../customer';
 export class RegisterComponent implements OnInit {
 
   customer: Customer = new Customer();
-  constructor(private router: Router) { }
+  constructor(private apiCustomerService: ApiCustomerService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  goToHome(){
+  saveCustomer() {
+    this.apiCustomerService.createCustomer(this.customer).subscribe(data => {
+      this.goToHome();
+    }, error => console.log(error));
+  }
+
+  goToHome() {
     this.router.navigate(['/home']);
   }
 
-  onSubmit(){
-    this.goToHome();
+  onSubmit() {
+    this.saveCustomer();
   }
 }
