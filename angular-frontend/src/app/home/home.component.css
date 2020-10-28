@@ -1,0 +1,19 @@
+/******* Home Background *******/
+.overlay{
+    background-image: url("../../assets/images/image3.jpeg");
+    height: 100vh;
+    background-position: center;
+  	background-repeat: no-repeat;
+  	background-size: cover;
+}
+
+.overlay-banner{
+    background-image: url("../../assets/images/water.jpg");
+    filter:grayscale(65%);
+    height: 60vh;
+    background-position: center;
+  	background-repeat: no-repeat;
+  	background-size: cover;
+  	background-attachment: fixed;
+  	position: relative;
+}

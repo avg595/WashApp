@@ -1,36 +1,29 @@
 <div class="container pt-5">
     <div class="col-md-6 offset-md-3">
-        <h3>Customer Login</h3>
-        <form (ngSubmit) = "onSubmit()">
+        <h3>Customer Register</h3>
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm.value)">
             <div class="form-group">
-                <label>
-                    Name
-                </label>
-                <input type="text" class="form-control" id="name" [(ngModel)]="customer.name" name="name"/>
+                <label>Name</label>
+                <input type="text" class="form-control" id="name" [(ngModel)]="customer.name" name="name" required/>
             </div>
         
             <div class="form-group">
-                <label>
-                    Username
-                </label>
-                <input type="text" class="form-control" id="userName" [(ngModel)]="customer.userName" name="userName"/>
+                <label>Username</label>
+                <input type="text" class="form-control" id="userName" [(ngModel)]="customer.userName" name="userName" required/>
             </div>
         
             <div class="form-group">
-                <label>
-                    Email
-                </label>
-                <input type="text" class="form-control" id="email" [(ngModel)]="customer.email" name="email"/>
+                <label>Email</label>
+                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="customer.email" email required #emailAdressField="ngModel"/>
+                <small *ngIf="emailAdressField.invalid">Email field is required.</small>
             </div>
 
             <div class="form-group">
-                <label>
-                    Password
-                </label>
-                <input type="text" class="form-control" id="password" [(ngModel)]="customer.password" name="password"/>
+                <label>Password</label>
+                <input type="password" class="form-control" id="password" [(ngModel)]="customer.password" name="password" required/>
             </div>
         
-            <button class="btn btn-success" type="submit">Submit</button>
+            <button class="btn btn-success" type="submit" [disabled]="!registerForm.valid">Submit</button>
         </form>
     </div>
 </div>
