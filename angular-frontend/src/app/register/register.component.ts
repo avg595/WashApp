@@ -18,12 +18,12 @@ export class RegisterComponent implements OnInit {
 
   saveCustomer() {
     this.apiCustomerService.createCustomer(this.customer).subscribe(data => {
-      this.goToShop();
+      this.goToHome();
     }, error => console.log(error));
   }
 
-  goToShop() {
-    this.router.navigate(['/shop']);
+  goToHome() {
+    this.router.navigate(['/home']);
   }
 
   onSubmit(data) {
