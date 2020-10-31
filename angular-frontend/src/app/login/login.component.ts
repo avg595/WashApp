@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
       if (response.status === 200) {
         console.log(response.body);
         if (response.body.password === this.customer.password) {
-          console.log("OK");
+          sessionStorage.setItem('id', response.body.id.toString());
           this.goToShop();
         } else {
           console.log("PASS ERR");
