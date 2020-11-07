@@ -11,6 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { ShopComponent } from './shop/shop.component';
 import { NavbarCustomerComponent } from './navbar-customer/navbar-customer.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NavbarCustomerComponent } from './navbar-customer/navbar-customer.compo
     RegisterComponent,
     HomeComponent,
     ShopComponent,
-    NavbarCustomerComponent
+    NavbarCustomerComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

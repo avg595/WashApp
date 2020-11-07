@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Customer } from '../customer';
 import { ApiCustomerService } from '../api/api-customer.service';
+import { ApiEmployeeService } from '../api/api-employee.service';
 
 @Component({
   selector: 'app-login',
@@ -11,20 +12,34 @@ import { ApiCustomerService } from '../api/api-customer.service';
 export class LoginComponent implements OnInit {
 
   customer: Customer = new Customer();
-  constructor(private apiCustomerService: ApiCustomerService, private router: Router) { }
+  constructor(private apiCustomerService: ApiCustomerService, private apiEmployeeService: ApiEmployeeService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  goToShop() {
-    this.router.navigate(['/shop']);
+  adminLogin(formData) {
+    this.apiEmployeeService.getEmployeeByEmail(formData.email).subscribe(response => {
+      if (response.status === 200) {
+        if (response.body.password === formData.password) {
+          sessionStorage.setItem('id', response.body.id.toString());
+          if (response.body.id === 1) {
+            this.goToAdminPanel();
+          } else {
+            console.log("worker");
+          }
+        } else {
+          console.log("PASS ERR");
+        }
+      } 
+    }), error => {
+      console.log(error);
+    }
   }
 
-  onSubmit(data) {
-    this.apiCustomerService.getCustomerByEmail(this.customer.email).subscribe(response => {
+  customerLogin(formData) {
+    this.apiCustomerService.getCustomerByEmail(formData.email).subscribe(response => {
       if (response.status === 200) {
-        console.log(response.body);
-        if (response.body.password === this.customer.password) {
+        if (response.body.password === formData.password) {
           sessionStorage.setItem('id', response.body.id.toString());
           this.goToShop();
         } else {
@@ -32,7 +47,23 @@ export class LoginComponent implements OnInit {
         }
       } 
     }, error => {
-      console.log(error)
+      console.log(error);
     })
+  }
+
+  goToShop() {
+    this.router.navigate(['/shop']);
+  }
+
+  goToAdminPanel() {
+    this.router.navigate(['/admin'])
+  }
+
+  onSubmit(formData) {
+    if (formData.email.includes('@washapp.com')) {
+      this.adminLogin(formData);
+    } else {
+      this.customerLogin(formData);
+    }
   }
 }
