@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
 
   userSessionId: any = sessionStorage.getItem('id');
+  userSessionName: any = sessionStorage.getItem('name');
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {

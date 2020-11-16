@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     this.apiEmployeeService.getEmployeeByEmail(formData.email).subscribe(response => {
       if (response.status === 200) {
         if (response.body.password === formData.password) {
-          sessionStorage.setItem('id', response.body.id.toString());
+          this.setSessionStorage(response.body.id.toString(), response.body.email);
           if (response.body.id === 1) {
             this.goToAdminPanel();
           } else {
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     this.apiCustomerService.getCustomerByEmail(formData.email).subscribe(response => {
       if (response.status === 200) {
         if (response.body.password === formData.password) {
-          sessionStorage.setItem('id', response.body.id.toString());
+          this.setSessionStorage(response.body.id.toString(), response.body.name);
           this.goToShop();
         } else {
           console.log("PASS ERR");
@@ -57,6 +57,11 @@ export class LoginComponent implements OnInit {
 
   goToAdminPanel() {
     this.router.navigate(['/admin'])
+  }
+
+  setSessionStorage(id: string, name: string) {
+    sessionStorage.setItem('id', id);
+    sessionStorage.setItem('name', name);
   }
 
   onSubmit(formData) {
