@@ -25,4 +25,8 @@ export class ApiEmployeeService {
     const httpHeaders = new HttpHeaders();
     return this.httpClient.get<Employee>(`${this.baseURL2}/${email}`, { headers: httpHeaders, observe: 'response'});
   }
+
+  deleteEmployee(id: number): Observable<Object>{
+    return this.httpClient.delete(`${this.baseURL}/${id}`);
+  }
 }

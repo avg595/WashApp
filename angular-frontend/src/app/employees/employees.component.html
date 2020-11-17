@@ -14,9 +14,9 @@
                 <td> {{ employee.id }} </td>
                 <td> {{ employee.email }} </td>
                 <td>
-                    <button (click) = "test()" class="btn btn-info">Update</button>
-                    <button (click) = "test()" class="btn btn-danger ml-2">Delete</button>
-                    <button (click) = "test()" class="btn btn-info ml-2">View</button>
+                    <button (click) = "updateEmployee(employee.id)" class="btn btn-info">Update</button>
+                    <button (click) = "deleteEmployee(employee.id)" class="btn btn-danger ml-2">Delete</button>
+                    <button (click) = "employeeDetails(employee.id)" class="btn btn-info ml-2">View</button>
                 </td>
             </tr>
         </tbody>

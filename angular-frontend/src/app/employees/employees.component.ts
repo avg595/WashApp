@@ -32,7 +32,21 @@ export class EmployeesComponent implements OnInit {
     this.apiEmployeeService.createEmployee(this.employee).subscribe(data => {
       window.location.reload();
     }, error => console.log(error));
-  } 
+  }
+  
+  employeeDetails(id: number){
+    console.log(id);
+  }
+
+  updateEmployee(id: number){
+    console.log(id);
+  }
+
+  deleteEmployee(id: number){
+    this.apiEmployeeService.deleteEmployee(id).subscribe(data=>{
+      this.getEmployees();
+    })
+  }
 
   showDialog() {
     this.display = true;
