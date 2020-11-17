@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopComponent implements OnInit {
 
-  userSessionId: any = sessionStorage.getItem('id');
   constructor() { }
 
   ngOnInit(): void {

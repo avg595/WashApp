@@ -11,7 +11,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { ShopComponent } from './shop/shop.component';
-import { NavbarCustomerComponent } from './navbar-customer/navbar-customer.component';
 import { AdminComponent } from './admin/admin.component';
 import { ProductsComponent } from './products/products.component';
 import { EmployeesComponent } from './employees/employees.component';
@@ -27,7 +26,6 @@ import { ButtonModule } from 'primeng/button';
     RegisterComponent,
     HomeComponent,
     ShopComponent,
-    NavbarCustomerComponent,
     AdminComponent,
     ProductsComponent,
     EmployeesComponent
