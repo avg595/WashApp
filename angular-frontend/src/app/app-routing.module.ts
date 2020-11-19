@@ -8,16 +8,18 @@ import { ProductsComponent } from './products/products.component';
 import { RegisterComponent } from './register/register.component';
 import { ShopComponent } from './shop/shop.component';
 
+import { AuthGuard } from './guards/auth.guard';
+import { ShopGuard } from './guards/shop.guard';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'admin', component: AdminComponent},
-  {path: 'shop', component: ShopComponent},
-  {path: 'products', component: ProductsComponent},
-  {path: 'employees', component: EmployeesComponent}
+  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
+  {path: 'shop', component: ShopComponent, canActivate: [ShopGuard]},
+  {path: 'products', component: ProductsComponent, canActivate: [AuthGuard]},
+  {path: 'employees', component: EmployeesComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
