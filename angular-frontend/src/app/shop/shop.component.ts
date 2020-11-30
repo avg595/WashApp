@@ -7,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopComponent implements OnInit {
 
+  userSessionId: string = sessionStorage.getItem('id');
+
   constructor() { }
 
   ngOnInit(): void {
-    
+    if (sessionStorage.getItem('reload') === 'no reload') {
+      location.reload();
+      sessionStorage.removeItem('reload');
+    }
   }
 
 }

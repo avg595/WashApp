@@ -10,6 +10,10 @@ export class AdminComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    if (sessionStorage.getItem('reload') === 'no reload') {
+      location.reload();
+      sessionStorage.removeItem('reload');
+    }
   }
 
 }

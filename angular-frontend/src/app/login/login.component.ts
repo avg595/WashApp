@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit {
     sessionStorage.setItem('id', id);
     sessionStorage.setItem('name', name);
     sessionStorage.setItem('type', type);
+    sessionStorage.setItem('reload', 'no reload');
   }
 
   onSubmit(formData) {

@@ -15,7 +15,6 @@ export class NavbarComponent implements OnInit {
   constructor(public router: Router) { }
 
   ngOnInit(): void {
-    
   }
 
   isLogged() {
@@ -24,7 +23,8 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     sessionStorage.clear();
-    this.router.navigate(['/home']);
-    window.location.reload();
+    this.router.navigate(['/home']).then(() =>
+      location.reload()
+    );
   }
 }
