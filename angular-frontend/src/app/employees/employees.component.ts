@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../employee';
 import { ApiEmployeeService } from '../api/api-employee.service';
+import { CommentStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-employees',
@@ -10,7 +11,9 @@ import { ApiEmployeeService } from '../api/api-employee.service';
 export class EmployeesComponent implements OnInit {
 
   employees: Employee[];
+
   display: boolean = false;
+  displayUpdate: boolean = false;
 
   employee: Employee = new Employee();
 
@@ -26,11 +29,17 @@ export class EmployeesComponent implements OnInit {
     })
   }
 
+  private getEmployeeById(id: number){
+    this.apiEmployeeService.getEmployeeById(id).subscribe(data => {
+      this.employee = data;
+    }, error => console.log(error));
+  }
+
   saveEmployee() {
     this.employee.email = this.employee.email + "@washapp.com";
     this.employee.password = "test";
     this.apiEmployeeService.createEmployee(this.employee).subscribe(data => {
-      window.location.reload();
+      location.reload();
     }, error => console.log(error));
   }
   
@@ -39,7 +48,8 @@ export class EmployeesComponent implements OnInit {
   }
 
   updateEmployee(id: number){
-    console.log(id);
+    this.getEmployeeById(id);
+    this.displayUpdate = true;
   }
 
   deleteEmployee(id: number){
@@ -57,7 +67,10 @@ export class EmployeesComponent implements OnInit {
     this.display = false;
   }
 
-  test(){
-
+  onSubmitUpdate(data) {
+    this.apiEmployeeService.updateEmployee(this.employee.id, this.employee).subscribe( data =>{
+      this.displayUpdate = false;
+      location.reload();
+    }, error => console.log(error));
   }
 }

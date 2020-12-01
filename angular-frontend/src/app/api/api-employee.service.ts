@@ -21,9 +21,17 @@ export class ApiEmployeeService {
     return this.httpClient.post(`${this.baseURL}`, employee);
   }
 
+  getEmployeeById(id: number): Observable<Employee>{
+    return this.httpClient.get<Employee>(`${this.baseURL}/${id}`);
+  }
+
   getEmployeeByEmail(email: string) {
     const httpHeaders = new HttpHeaders();
     return this.httpClient.get<Employee>(`${this.baseURL2}/${email}`, { headers: httpHeaders, observe: 'response'});
+  }
+
+  updateEmployee(id: number, employee: Employee): Observable<Object>{
+    return this.httpClient.put(`${this.baseURL}/${id}`, employee);
   }
 
   deleteEmployee(id: number): Observable<Object>{
