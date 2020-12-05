@@ -7,6 +7,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Price</th>
+                <th>Type</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -15,6 +16,7 @@
                 <td> {{ product.id }} </td>
                 <td> {{ product.name }} </td>
                 <td> {{ product.price }} </td>
+                <td> {{ product.type }} </td>
                 <td>
                     <button (click) = "updateProduct(product.id)" class="btn btn-info">Update</button>
                     <button (click) = "deleteProduct(product.id)" class="btn btn-danger ml-2">Delete</button>
@@ -24,3 +26,27 @@
         </tbody>
     </table>
 </div>
+
+<p-dialog header="New product" [(visible)]="display" [modal]="true" [draggable]="false" [resizable]="false">
+    <form #newProductForm="ngForm" (ngSubmit)="onSubmit(newProductForm.value)">
+
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="product.name" name="name" required/>
+        </div>
+
+        <div class="form-group">
+            <label>Price</label>
+            <input type="text" class="form-control" id="price" [(ngModel)]="product.price" name="price" required/>
+        </div>
+
+        <div class="form-group">
+            <label>Type</label>
+            <input type="text" class="form-control" id="type" [(ngModel)]="product.type" name="type" required/>
+        </div>
+        
+        <p-footer>
+            <button type="submit" pButton icon="pi pi-check" label="Submit" [disabled]="!newProductForm.valid"></button>
+        </p-footer>
+    </form>
+</p-dialog>

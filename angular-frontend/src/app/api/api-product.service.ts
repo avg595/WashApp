@@ -15,4 +15,8 @@ export class ApiProductService {
   getProductsList(): Observable<Product[]>{
     return this.httpClient.get<Product[]>(`${this.baseURL}`);
   }
+
+  createProduct(product: Product): Observable<Object>{
+    return this.httpClient.post(`${this.baseURL}`, product);
+  }
 }

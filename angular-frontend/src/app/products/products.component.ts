@@ -13,6 +13,8 @@ export class ProductsComponent implements OnInit {
 
   display: boolean = false;
 
+  product: Product = new Product();
+
   constructor(private apiProductService: ApiProductService) { }
 
   ngOnInit(): void {
@@ -23,6 +25,12 @@ export class ProductsComponent implements OnInit {
     this.apiProductService.getProductsList().subscribe(data => {
       this.products = data;
     })
+  }
+
+  saveProduct() {
+    this.apiProductService.createProduct(this.product).subscribe(data => {
+      location.reload();
+    }, error => console.log(error));
   }
 
   productDetails(id: number){
@@ -39,5 +47,10 @@ export class ProductsComponent implements OnInit {
 
   showDialog() {
     this.display = true;
+  }
+
+  onSubmit(data) {
+    this.saveProduct();
+    this.display = false;
   }
 }
