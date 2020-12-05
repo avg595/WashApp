@@ -12,6 +12,7 @@ export class ProductsComponent implements OnInit {
   products: Product[];
 
   display: boolean = false;
+  displayUpdate: boolean = false;
 
   product: Product = new Product();
 
@@ -27,6 +28,12 @@ export class ProductsComponent implements OnInit {
     })
   }
 
+  private getProductById(id: number){
+    this.apiProductService.getProductById(id).subscribe(data => {
+      this.product = data;
+    }, error => console.log(error));
+  }
+
   saveProduct() {
     this.apiProductService.createProduct(this.product).subscribe(data => {
       location.reload();
@@ -38,7 +45,8 @@ export class ProductsComponent implements OnInit {
   }
 
   updateProduct(id: number){
-    
+    this.getProductById(id);
+    this.displayUpdate = true;
   }
 
   deleteProduct(id: number){
@@ -54,5 +62,12 @@ export class ProductsComponent implements OnInit {
   onSubmit(data) {
     this.saveProduct();
     this.display = false;
+  }
+
+  onSubmitUpdate(data) {
+    this.apiProductService.updateProduct(this.product.id, this.product).subscribe( data =>{
+      this.displayUpdate = false;
+      location.reload();
+    }, error => console.log(error));
   }
 }

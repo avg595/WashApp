@@ -50,3 +50,27 @@
         </p-footer>
     </form>
 </p-dialog>
+
+<p-dialog header="Update product" [(visible)]="displayUpdate" [modal]="true" [draggable]="false" [resizable]="false">
+    <form #updateProductForm="ngForm" (ngSubmit)="onSubmitUpdate(updateProductForm.value)">
+
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="product.name" name="name" required/>
+        </div>
+
+        <div class="form-group">
+            <label>Price</label>
+            <input type="text" class="form-control" id="price" [(ngModel)]="product.price" name="price" required/>
+        </div>
+
+        <div class="form-group">
+            <label>Type</label>
+            <input type="text" class="form-control" id="type" [(ngModel)]="product.type" name="type" required/>
+        </div>
+        
+        <p-footer>
+            <button type="submit" pButton icon="pi pi-check" label="Submit" [disabled]="!updateProductForm.valid"></button>
+        </p-footer>
+    </form>
+</p-dialog>

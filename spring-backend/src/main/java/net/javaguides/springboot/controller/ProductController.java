@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,20 @@ public class ProductController {
 				.orElseThrow(() -> new ResourceNotFoundException("Product not exist with id : " + id));
 
 		return ResponseEntity.ok(product);
+	}
+	
+	@PutMapping("/products/{id}")
+	public ResponseEntity<Product> updateEmployee(@PathVariable Long id, @RequestBody Product productDetails){
+		
+		Product product = productRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Product not exist with id : " + id));
+		
+		product.setName(productDetails.getName());
+		product.setPrice(productDetails.getPrice());
+		product.setType(productDetails.getType());
+		
+		Product updatedEProduct = productRepository.save(product);
+		return ResponseEntity.ok(updatedEProduct);
 	}
 	
 	@DeleteMapping("/products/{id}")
