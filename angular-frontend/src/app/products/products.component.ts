@@ -42,7 +42,9 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(id: number){
-    
+    this.apiProductService.deleteProduct(id).subscribe(data=>{
+      this.getProducts();
+    })
   }
 
   showDialog() {

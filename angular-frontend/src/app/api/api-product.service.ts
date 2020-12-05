@@ -19,4 +19,8 @@ export class ApiProductService {
   createProduct(product: Product): Observable<Object>{
     return this.httpClient.post(`${this.baseURL}`, product);
   }
+
+  deleteProduct(id: number): Observable<Object>{
+    return this.httpClient.delete(`${this.baseURL}/${id}`);
+  }
 }
