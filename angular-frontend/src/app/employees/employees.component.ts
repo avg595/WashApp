@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from '../employee';
 import { ApiEmployeeService } from '../api/api-employee.service';
-import { CommentStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-employees',

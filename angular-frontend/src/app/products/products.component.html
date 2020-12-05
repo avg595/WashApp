@@ -1,1 +1,26 @@
-<p>products works!</p>
+<div class="container pt-5 mt-5">
+    <h2>Product List</h2> 
+    <button (click) = "showDialog()" class="btn btn-info mt-3 mb-3">ADD PRODUCT</button>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let product of products">
+                <td> {{ product.id }} </td>
+                <td> {{ product.name }} </td>
+                <td> {{ product.price }} </td>
+                <td>
+                    <button (click) = "updateProduct(product.id)" class="btn btn-info">Update</button>
+                    <button (click) = "deleteProduct(product.id)" class="btn btn-danger ml-2">Delete</button>
+                    <button (click) = "productDetails(product.id)" class="btn btn-info ml-2">View</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
