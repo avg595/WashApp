@@ -3,16 +3,19 @@ import { Router } from '@angular/router';
 import { Customer } from '../customer';
 import { ApiCustomerService } from '../api/api-customer.service';
 import { ApiEmployeeService } from '../api/api-employee.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [MessageService]
 })
 export class LoginComponent implements OnInit {
 
   customer: Customer = new Customer();
-  constructor(private apiCustomerService: ApiCustomerService, private apiEmployeeService: ApiEmployeeService, private router: Router) { }
+  constructor(private apiCustomerService: ApiCustomerService, private apiEmployeeService: ApiEmployeeService, 
+              private router: Router, private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
@@ -23,18 +26,28 @@ export class LoginComponent implements OnInit {
         if (response.body.password === formData.password) {
           if (response.body.id === 1) {
             this.setSessionStorage(response.body.id.toString(), response.body.email, "admin");
-            this.goToAdminPanel();
+            this.showSuccess();
+            setTimeout(() => {
+              this.goToAdminPanel();
+            }, 1000);
           } else {
             this.setSessionStorage(response.body.id.toString(), response.body.email, "employee");
-            console.log("worker");
+            this.showSuccess();
+            setTimeout(() => {
+              console.log("worker");
+            }, 1000);
           }
         } else {
-          console.log("PASS ERR");
+          this.showError("Wrong password");
         }
       } 
-    }), error => {
-      console.log(error);
-    }
+    }, error => {
+      if (error.status === 404) {
+        this.showError("Wrong email");
+      } else {
+        console.log(error);
+      }
+    })
   }
 
   customerLogin(formData) {
@@ -42,13 +55,20 @@ export class LoginComponent implements OnInit {
       if (response.status === 200) {
         if (response.body.password === formData.password) {
           this.setSessionStorage(response.body.id.toString(), response.body.name, "customer");
-          this.goToShop();
+          this.showSuccess();
+            setTimeout(() => {
+              this.goToShop();
+            }, 1000);
         } else {
-          console.log("PASS ERR");
+          this.showError("Wrong password");
         }
       } 
     }, error => {
-      console.log(error);
+      if (error.status === 404) {
+        this.showError("Wrong email");
+      } else {
+        console.log(error);
+      }
     })
   }
 
@@ -73,5 +93,13 @@ export class LoginComponent implements OnInit {
     } else {
       this.customerLogin(formData);
     }
+  }
+
+  showSuccess() {
+    this.messageService.add({severity:'success', summary: 'Success', detail: 'Login ok'});
+  }
+
+  showError(detail: string) {
+    this.messageService.add({severity:'error', summary: 'Error', detail: detail});
   }
 }

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
 import { ApiProductService } from '../api/api-product.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  styleUrls: ['./products.component.css'],
+  providers: [ConfirmationService, MessageService]
 })
 export class ProductsComponent implements OnInit {
 
@@ -16,7 +18,8 @@ export class ProductsComponent implements OnInit {
 
   product: Product = new Product();
 
-  constructor(private apiProductService: ApiProductService) { }
+  constructor(private apiProductService: ApiProductService, private confirmationService: ConfirmationService,
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getProducts();
@@ -36,7 +39,8 @@ export class ProductsComponent implements OnInit {
 
   saveProduct() {
     this.apiProductService.createProduct(this.product).subscribe(data => {
-      location.reload();
+      this.getProducts();
+      this.showInfo("Product saved.");
     }, error => console.log(error));
   }
 
@@ -50,12 +54,11 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(id: number){
-    this.apiProductService.deleteProduct(id).subscribe(data=>{
-      this.getProducts();
-    })
+    this.deletePopUpConfirmation(id);
   }
 
   showDialog() {
+    this.product = new Product();
     this.display = true;
   }
 
@@ -67,7 +70,29 @@ export class ProductsComponent implements OnInit {
   onSubmitUpdate(data) {
     this.apiProductService.updateProduct(this.product.id, this.product).subscribe( data =>{
       this.displayUpdate = false;
-      location.reload();
+      this.getProducts();
+      this.showInfo("Product updated.");
     }, error => console.log(error));
+  }
+
+  deletePopUpConfirmation(id: number) {
+    this.confirmationService.confirm({
+        message: 'Do you want to delete this record?',
+        header: 'Delete Confirmation',
+        icon: 'pi pi-info-circle',
+        accept: () => {
+          this.apiProductService.deleteProduct(id).subscribe(data=>{
+            this.getProducts();
+          })
+          this.showInfo("Product deleted.");
+        },
+        reject: () => {
+          this.showInfo("Product not deleted.");
+        }
+    });
+  }
+
+  showInfo(detail: string) {
+    this.messageService.add({severity:'info', summary: 'Info', detail: detail});
   }
 }

@@ -17,6 +17,8 @@ import { EmployeesComponent } from './employees/employees.component';
 
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { ButtonModule } from 'primeng/button';
     BrowserAnimationsModule,
     DialogModule,
     ButtonModule,
+    ToastModule,
+    ConfirmDialogModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule
