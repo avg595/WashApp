@@ -8,32 +8,32 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "products")
-public class Product {
-
+@Table(name = "files")
+public class Image {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@Column(name = "name")
-	private String name;
-	
-	@Column(name = "price")
-	private float price;
+	private String name;	
 	
 	@Column(name = "type")
-	private int type;
+	private String type;    
+	
+	//image bytes can have large lengths so we specify a value which is more than the default length for picByte column
+	@Column(name = "picByte", length = 10000)
+	private byte[] picByte;
 
-	public Product() {
-		
+	public Image() {
+		super();
 	}
 	
-	public Product(long id, String name, float price, int type) {
+	public Image(String name, String type, byte[] picByte) {
 		super();
-		this.id = id;
 		this.name = name;
-		this.price = price;
 		this.type = type;
+		this.picByte = picByte;
 	}
 
 	public long getId() {
@@ -52,19 +52,19 @@ public class Product {
 		this.name = name;
 	}
 
-	public float getPrice() {
-		return price;
-	}
-
-	public void setPrice(float price) {
-		this.price = price;
-	}
-
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
+	}
+
+	public byte[] getPicByte() {
+		return picByte;
+	}
+
+	public void setPicByte(byte[] picByte) {
+		this.picByte = picByte;
 	}
 }

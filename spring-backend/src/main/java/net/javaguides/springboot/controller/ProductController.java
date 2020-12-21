@@ -51,7 +51,7 @@ public class ProductController {
 	}
 	
 	@PutMapping("/products/{id}")
-	public ResponseEntity<Product> updateEmployee(@PathVariable Long id, @RequestBody Product productDetails){
+	public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails){
 		
 		Product product = productRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Product not exist with id : " + id));
