@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  adminLogin(formData) {
+  employeeLogin(formData) {
     this.apiEmployeeService.getEmployeeByEmail(formData.email).subscribe(response => {
       if (response.status === 200) {
         if (response.body.password === formData.password) {
@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(formData) {
     if (formData.email.includes('@washapp.com')) {
-      this.adminLogin(formData);
+      this.employeeLogin(formData);
     } else {
       this.customerLogin(formData);
     }

@@ -31,20 +31,22 @@ public class ImageController {
 	@Autowired
 	private ImageRepository imageRepository;
 	
-	@PostMapping("/upload")
-	public ResponseEntity<Image> uplaodImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
+	@PostMapping("/upload/{productId}")
+	public ResponseEntity<Image> uplaodImage(@PathVariable("productId") Long productId,
+			@RequestParam("imageFile") MultipartFile file) throws IOException {
+		
 		System.out.println("Original Image Byte Size - " + file.getBytes().length);
 		Image img = new Image(file.getOriginalFilename(), file.getContentType(),
-				compressBytes(file.getBytes()));
+				compressBytes(file.getBytes()), productId);
 		imageRepository.save(img);
 		return ResponseEntity.ok(img);
 	}
 
-	@GetMapping("/get/{imageName}")
-	public Image getImage(@PathVariable("imageName") String imageName) throws IOException {
-		final Optional<Image> retrievedImage = imageRepository.findByName(imageName);
+	@GetMapping("/get/{productId}")
+	public Image getImage(@PathVariable("productId") Long productId) throws IOException {
+		final Optional<Image> retrievedImage = imageRepository.findByProductId(productId);
 		Image img = new Image(retrievedImage.get().getName(), retrievedImage.get().getType(),
-				decompressBytes(retrievedImage.get().getPicByte()));
+				decompressBytes(retrievedImage.get().getPicByte()), retrievedImage.get().getProductId());
 		return img;
 	} 
 	

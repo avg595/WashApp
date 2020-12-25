@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../product';
+import { File } from '../file';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import { Product } from '../product';
 export class ApiProductService {
 
   private baseURL = "http://localhost:8080/api/v3/products";
+  private imageURL = "http://localhost:8080/api/v4/upload";
+  private getImageURL = "http://localhost:8080/api/v4/get";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -30,5 +33,15 @@ export class ApiProductService {
 
   deleteProduct(id: number): Observable<Object>{
     return this.httpClient.delete(`${this.baseURL}/${id}`);
+  }
+
+  updateProductImage(id: number, uploadImageData: FormData) {
+    const httpHeaders = new HttpHeaders();
+    return this.httpClient.post(`${this.imageURL}/${id}`, uploadImageData, { headers: httpHeaders, observe: 'response'});
+  }
+
+  getProductImage(id: number){
+    const httpHeaders = new HttpHeaders();
+    return this.httpClient.get<File>(`${this.getImageURL}/${id}`, { headers: httpHeaders, observe: 'response'});
   }
 }

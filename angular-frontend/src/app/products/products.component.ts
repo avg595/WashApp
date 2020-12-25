@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
 import { ApiProductService } from '../api/api-product.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-products',
@@ -15,11 +16,19 @@ export class ProductsComponent implements OnInit {
 
   display: boolean = false;
   displayUpdate: boolean = false;
+  displayUpdateImage: boolean = false;
+  displayProductData: boolean = false;
 
   product: Product = new Product();
 
+  selectedFile: File = null;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  imageName: any;
+
   constructor(private apiProductService: ApiProductService, private confirmationService: ConfirmationService,
-              private messageService: MessageService) { }
+              private messageService: MessageService, private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     this.getProducts();
@@ -44,8 +53,34 @@ export class ProductsComponent implements OnInit {
     }, error => console.log(error));
   }
 
-  productDetails(id: number){
+  saveImage() {
+    const uploadImageData = new FormData();
+    
+    let imageExtension = this.selectedFile.name.substring(this.selectedFile.name.indexOf("."));
+    let productName = this.product.name.toLowerCase().replace(/\s+/g, '');
+    this.imageName = productName + imageExtension;
+    
+    uploadImageData.append('imageFile', this.selectedFile, this.imageName);
 
+    let productId = this.product.id;
+
+    this.apiProductService.updateProductImage(productId, uploadImageData).subscribe(response => {
+      if (response.status === 200) {
+        this.showInfo("Image uploaded successfully");
+      } else {
+        this.showInfo("Image not uploaded successfully");
+      }
+    }, error => console.log(error));
+  }
+
+  productDetails(id: number){
+    this.getProductImage(id);
+    this.displayProductData = true;
+  }
+
+  saveProductImage(id: number){
+    this.getProductById(id);
+    this.displayUpdateImage = true;
   }
 
   updateProduct(id: number){
@@ -67,12 +102,29 @@ export class ProductsComponent implements OnInit {
     this.display = false;
   }
 
+  getProductImage(productId: number) {
+    this.apiProductService.getProductImage(productId).subscribe(response => {
+      if (response.status === 200) {
+        this.base64Data = response.body.picByte;
+        this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+      } else {
+        this.showInfo("Image not uploaded successfully");
+      }
+    }, error => console.log(error));
+    // if res = 500 no value
+  }
+
   onSubmitUpdate(data) {
     this.apiProductService.updateProduct(this.product.id, this.product).subscribe( data =>{
       this.displayUpdate = false;
       this.getProducts();
       this.showInfo("Product updated.");
     }, error => console.log(error));
+  }
+
+  onSubmitUpdateImage(data) {
+    this.saveImage();
+    this.displayUpdateImage = false;
   }
 
   deletePopUpConfirmation(id: number) {
@@ -94,5 +146,9 @@ export class ProductsComponent implements OnInit {
 
   showInfo(detail: string) {
     this.messageService.add({severity:'info', summary: 'Info', detail: detail});
+  }
+
+  onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
   }
 }

@@ -9,6 +9,6 @@ import net.javaguides.springboot.model.Image;
 
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Long>{
-	Optional<Image> findByName(String name);
+	Optional<Image> findByProductId(Long productId);
 	
 }

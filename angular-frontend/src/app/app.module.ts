@@ -19,6 +19,8 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { FocusTrapModule } from 'primeng/focustrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -39,9 +41,11 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ButtonModule,
     ToastModule,
     ConfirmDialogModule,
+    FocusTrapModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

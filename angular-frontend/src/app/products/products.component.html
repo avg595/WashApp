@@ -20,6 +20,7 @@
                 <td>
                     <button (click) = "updateProduct(product.id)" class="btn btn-info">Update</button>
                     <button (click) = "deleteProduct(product.id)" class="btn btn-danger ml-2">Delete</button>
+                    <button (click) = "saveProductImage(product.id)" class="btn btn-info ml-2">Image</button>
                     <button (click) = "productDetails(product.id)" class="btn btn-info ml-2">View</button>
                 </td>
             </tr>
@@ -73,6 +74,26 @@
             <button type="submit" pButton icon="pi pi-check" label="Submit" [disabled]="!updateProductForm.valid"></button>
         </p-footer>
     </form>
+</p-dialog>
+
+<p-dialog header="Update product image" [(visible)]="displayUpdateImage" [modal]="true" [draggable]="false" [resizable]="false">
+    <form #updateProductImageForm="ngForm" (ngSubmit)="onSubmitUpdateImage(updateProductImageForm.value)">
+
+        <div class="form-group">
+            <label>Image</label>
+            <input type="file" class="form-control" id="image" [(ngModel)]="imageName" name="image" (change)="onFileSelected($event)" required/>
+        </div>
+        
+        <p-footer>
+            <button type="submit" pButton icon="pi pi-check" label="Submit" [disabled]="!updateProductImageForm.valid"></button>
+        </p-footer>
+    </form>
+</p-dialog>
+
+<p-dialog header="Product data" [(visible)]="displayProductData">
+    <div *ngIf=retrievedImage>
+        <img [src]="retrievedImage">
+    </div>
 </p-dialog>
 
 <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
