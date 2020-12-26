@@ -108,10 +108,16 @@ export class ProductsComponent implements OnInit {
         this.base64Data = response.body.picByte;
         this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
       } else {
-        this.showInfo("Image not uploaded successfully");
+        this.showError("ERROR");
       }
-    }, error => console.log(error));
-    // if res = 500 no value
+    }, error => {
+      if (error.status === 500) {
+        this.displayProductData = false;
+        this.showError("Product without image");
+      } else {
+        console.log(error);
+      }
+    })
   }
 
   onSubmitUpdate(data) {
@@ -146,6 +152,10 @@ export class ProductsComponent implements OnInit {
 
   showInfo(detail: string) {
     this.messageService.add({severity:'info', summary: 'Info', detail: detail});
+  }
+
+  showError(detail: string) {
+    this.messageService.add({severity:'error', summary: 'Error', detail: detail});
   }
 
   onFileSelected(event) {
