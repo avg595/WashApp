@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-light navbar-light fixed-top">
-    <a class="navbar-brand" href="">
+    <a class="navbar-brand font-weight-bold" href="">
         <img src="assets/images/washing-machine.png" class="d-inline-block align-top logo" alt="logo_wash_app">
         WashApp
     </a>
@@ -9,29 +9,29 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-
-        <ul *ngIf="this.router.url === '/home'" class="navbar-nav justify-content-center d-flex flex-fill">
-          <li class="nav-item active">
+        <!-- <ul *ngIf="this.router.url === '/home'" class="navbar-nav justify-content-center d-flex flex-fill"> -->
+        <ul *ngIf="isHomeRoute()" class="navbar-nav justify-content-center d-flex flex-fill font-weight-bold">
+            <li class="nav-item active">
                 <a class="nav-link nav-menu" href="">Home</a>
-          </li>
-          <li class="nav-item">
-                <a class="nav-link nav-menu" href="">Servicio</a>
-          </li>
-          <li class="nav-item">
-                <a class="nav-link nav-menu" href="">Sobre nosotros</a>
-             </li>
-             <li class="nav-item">
-                <a class="nav-link nav-menu" href="">Opciones</a>
-             </li>
-             <li class="nav-item">
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-menu" href="#boxes">Servicio</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-menu" href="#aboutus">Sobre nosotros</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-menu" href="#options">Opciones</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link nav-menu" href="">Contacto</a>
-             </li>
-             <li class="nav-item" *ngIf="isLogged() && userSessionType === 'customer'">
+            </li>
+            <li class="nav-item" *ngIf="isLogged() && userSessionType === 'customer'">
                 <a routerLink="../shop" routerLinkActive="active" class="nav-link nav-menu">Tienda</a>
-             </li>
+            </li>
         </ul>
 
-        <ul *ngIf="!isLogged() && this.router.url === '/home'; else logged" class="nav navbar-nav justify-content-md-center justify-content-start flex-nowrap">
+        <ul *ngIf="!isLogged() && isHomeRoute(); else logged" class="nav navbar-nav justify-content-md-center justify-content-start flex-nowrap">
             <li class="nav-item li-login">
                 <a routerLink="../login" routerLinkActive="active" 
                 class="nav-link btn btn-light btn-sm active mr-2" role="button">ACCEDE</a>
@@ -47,13 +47,13 @@
         <ul *ngIf="userSessionName !== null" class="navbar-nav ml-auto">
             <li class="nav-item active dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class='fas fa-user'></span>{{userSessionName}}
+                    <i-bs name="person-fill"></i-bs> {{userSessionName}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                     <div *ngIf="userSessionType === 'customer'">
-                        <a class="dropdown-item" href=""><span class='fas fa-info-circle'></span> Pedidos</a>
+                        <a class="dropdown-item" href=""><i-bs name="info-circle-fill"></i-bs> Pedidos</a>
                     </div>
-                    <div class="dropdown-item" (click)="logout()"><span class='fas fa-sign-out-alt'></span>  Logout </div>
+                    <div class="dropdown-item" (click)="logout()"><i-bs name="door-open-fill"></i-bs>  Logout </div>
                 </div>
             </li>
         </ul>

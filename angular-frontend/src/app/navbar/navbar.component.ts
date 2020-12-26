@@ -17,6 +17,10 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  isHomeRoute() {
+    return this.router.url.includes('home') ? true: false;
+  }
+
   isLogged() {
     return this.userSessionId === null ? false : true;
   }
