@@ -44,4 +44,8 @@ export class ApiProductService {
     const httpHeaders = new HttpHeaders();
     return this.httpClient.get<File>(`${this.getImageURL}/${id}`, { headers: httpHeaders, observe: 'response'});
   }
+
+  getFilesList(): Observable<File[]>{
+    return this.httpClient.get<File[]>(`${this.getImageURL}/files`);
+  }
 }

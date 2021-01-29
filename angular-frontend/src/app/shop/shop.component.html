@@ -1,1 +1,37 @@
-<p>shop works!</p>
+<div class="container p-5">
+    <div class="row mt-5">
+		<ul class="filters text-center">
+            <li class="active" data-filter="*"><a href="#!">Todo</a></li>
+            <li data-filter=".cat1"><a href="#!">Superior</a></li>
+            <li data-filter=".cat2"><a href="#!">Inferior</a></li>
+            <li data-filter=".cat3"><a href="#!">Accesorios</a></li>
+            <li data-filter=".cat4"><a href="#!">Hogar</a></li>
+            <li data-filter=".cat5"><a href="#!">Packs</a></li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <ng-container *ngFor = "let product of products; let i = index">
+                <div class="col-4 p-3 mb-3 shadow text-center">
+                    <div>
+                        <div >
+                            <ng-container *ngFor = "let image of images;">
+                                <div *ngIf = "product.id === image.productId">
+                                    <img [src]="'data:image/jpeg;base64,'+image.picByte">
+                                </div>
+                            </ng-container>
+
+                            <div *ngIf=retrievedImage>
+                                <img [src]="retrievedImage">
+                            </div>
+                        </div>
+                        
+                        <h4>{{ product.name }}</h4>
+                        <p>{{ product.price }} €/u</p>
+                    </div>
+                </div>
+        </ng-container>
+    </div>
+
+    
+</div>

@@ -2,6 +2,8 @@ package net.javaguides.springboot.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
@@ -48,7 +50,20 @@ public class ImageController {
 		Image img = new Image(retrievedImage.get().getName(), retrievedImage.get().getType(),
 				decompressBytes(retrievedImage.get().getPicByte()), retrievedImage.get().getProductId());
 		return img;
-	} 
+	}
+	
+	// get all files
+	@GetMapping("get/files")
+	public List<Image> getAllImages() {
+		
+		List<Image> imagesList = imageRepository.findAll();
+		
+		for (Image imageList : imagesList ) {
+			imageList.setPicByte(decompressBytes(imageList.getPicByte()));
+		}
+		
+		return imagesList;
+	}
 	
 	// compress the image bytes before storing it in the database
 	public static byte[] compressBytes(byte[] data) {

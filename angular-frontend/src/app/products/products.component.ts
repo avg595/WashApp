@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
 import { ApiProductService } from '../api/api-product.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { HttpClient, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-products',
@@ -24,11 +23,10 @@ export class ProductsComponent implements OnInit {
   selectedFile: File = null;
   retrievedImage: any;
   base64Data: any;
-  retrieveResonse: any;
   imageName: any;
 
   constructor(private apiProductService: ApiProductService, private confirmationService: ConfirmationService,
-              private messageService: MessageService, private httpClient: HttpClient) { }
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getProducts();
