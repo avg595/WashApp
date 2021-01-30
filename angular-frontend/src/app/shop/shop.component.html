@@ -14,20 +14,22 @@
         <ng-container *ngFor = "let product of products; let i = index">
                 <div class="col-4 p-3 mb-3 shadow text-center">
                     <div>
-                        <div >
+                        <div>
                             <ng-container *ngFor = "let image of images;">
                                 <div *ngIf = "product.id === image.productId">
                                     <img [src]="'data:image/jpeg;base64,'+image.picByte">
                                 </div>
                             </ng-container>
-
-                            <div *ngIf=retrievedImage>
-                                <img [src]="retrievedImage">
-                            </div>
                         </div>
                         
-                        <h4>{{ product.name }}</h4>
-                        <p>{{ product.price }} €/u</p>
+                        <div>
+                            <h4>{{ product.name }}</h4>
+                            <p>{{ product.price }} €/u</p>
+                            <i-bs name="dash-square-fill" (click)="minus(product.id)"></i-bs>
+                            <span class="ml-2 mr-2" id="numProd{{product.id}}">1</span>
+                            <i-bs name="plus-square-fill" (click)="plus(product.id)"></i-bs>
+                            <button type="button" class="btn btn-info btn-block mt-3">Añadir</button>
+                        </div>
                     </div>
                 </div>
         </ng-container>

@@ -53,4 +53,23 @@ export class ShopComponent implements OnInit {
     }, error => console.log(error));
   }
 
+  minus(productId: number) {
+    const quantityRow = document.getElementById("numProd" + productId);
+    let actualQty = document.getElementById("numProd" + productId).innerHTML;
+    let minQty = parseInt(actualQty);
+
+    if (minQty > 1) {
+      minQty--;
+      quantityRow.innerHTML = minQty.toString();
+    }
+  }
+
+  plus(productId: number) {
+    const quantityRow = document.getElementById("numProd" + productId);
+    let actualQty = document.getElementById("numProd" + productId).innerHTML;
+    let sumQty = parseInt(actualQty);
+
+    sumQty++;
+    quantityRow.innerHTML = sumQty.toString();
+  }
 }
