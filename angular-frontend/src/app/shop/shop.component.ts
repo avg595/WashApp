@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../product';
 import { File } from '../file';
 import { ApiProductService } from '../api/api-product.service';
+import { ApiCartService } from '../api/api-cart.service';
+import { Cart } from '../model/cart';
 
 @Component({
   selector: 'app-shop',
@@ -18,7 +20,9 @@ export class ShopComponent implements OnInit {
   retrievedImage: any;
   base64Data: any;
 
-  constructor(private apiProductService: ApiProductService) { }
+  cart: Cart = new Cart();
+
+  constructor(private apiProductService: ApiProductService, private apiCartService: ApiCartService) { }
 
   ngOnInit(): void {
     if (sessionStorage.getItem('reload') === 'no reload') {
@@ -30,6 +34,8 @@ export class ShopComponent implements OnInit {
     //this.getProductImage(1);
     this.getImages();
 
+
+    this.checkIfUserCartExists();
   }
 
   private getProducts() {
@@ -44,14 +50,34 @@ export class ShopComponent implements OnInit {
     })
   }
 
-  getProductImage(productId: number) {
+  private checkIfUserCartExists() {
+    this.apiCartService.getCartByCustomerId(parseInt(this.userSessionId)).subscribe(response => {
+      if (response.status === 200) {
+        /* console.log("tiene carro") */
+      }
+    }, error => {
+      if (error.status === 404) {
+        this.createUserCart();
+      } else {
+        console.log(error);
+      }
+    })
+  }
+
+  private createUserCart() {
+    this.apiCartService.createCart(parseInt(this.userSessionId)).subscribe(response => {
+      /* console.log(response) */
+    }, error => console.log(error));
+  }
+
+  /* getProductImage(productId: number) {
     this.apiProductService.getProductImage(productId).subscribe(response => {
       if (response.status === 200) {
         this.base64Data = response.body.picByte;
         this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
       }
     }, error => console.log(error));
-  }
+  } */
 
   minus(productId: number) {
     const quantityRow = document.getElementById("numProd" + productId);

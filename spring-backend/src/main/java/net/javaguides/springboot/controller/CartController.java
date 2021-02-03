@@ -23,9 +23,13 @@ public class CartController {
 	private CartRepository cartRepository;
 	
 	// create cart rest api
-	@PostMapping("/cart")
-	public Cart createCart(@RequestBody Cart cart) {
-		return cartRepository.save(cart);
+	@PostMapping("/cart/{customerId}")
+	public ResponseEntity<Cart> createCart(@PathVariable Long customerId) {
+		
+		Cart cart = new Cart(customerId);
+		
+		cartRepository.save(cart);
+		return ResponseEntity.ok(cart);
 	}
 	
 	// get cart by customer id

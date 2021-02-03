@@ -22,9 +22,7 @@ public class Cart {
 	
 	}
 
-	public Cart(long id, long customerId) {
-		super();
-		this.id = id;
+	public Cart(long customerId) {
 		this.customerId = customerId;
 	}
 
