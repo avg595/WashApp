@@ -28,7 +28,7 @@
                             <i-bs name="dash-square-fill" (click)="minus(product.id)"></i-bs>
                             <span class="ml-2 mr-2" id="numProd{{product.id}}">1</span>
                             <i-bs name="plus-square-fill" (click)="plus(product.id)"></i-bs>
-                            <button type="button" class="btn btn-info btn-block mt-3">Añadir</button>
+                            <button type="button" (click)="addProductToCart(product.id)" class="btn btn-info btn-block mt-3">Añadir</button>
                         </div>
                     </div>
                 </div>

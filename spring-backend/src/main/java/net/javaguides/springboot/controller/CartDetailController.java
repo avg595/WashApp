@@ -29,8 +29,8 @@ public class CartDetailController {
 	}
 	
 	// get cart detail by id
-	@GetMapping("customers/{id}")
-	public ResponseEntity<CartDetail> getEmpoyeeById(@PathVariable Long id) {
+	@GetMapping("cartdetail/{id}")
+	public ResponseEntity<CartDetail> getCartDetailById(@PathVariable Long id) {
 
 		CartDetail cartDetail = cartDetailRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Cart detail not exist with id : " + id));

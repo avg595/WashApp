@@ -3,7 +3,7 @@ import { Product } from '../product';
 import { File } from '../file';
 import { ApiProductService } from '../api/api-product.service';
 import { ApiCartService } from '../api/api-cart.service';
-import { Cart } from '../model/cart';
+import { CartDetail } from '../model/cart-detail';
 
 @Component({
   selector: 'app-shop',
@@ -20,7 +20,7 @@ export class ShopComponent implements OnInit {
   retrievedImage: any;
   base64Data: any;
 
-  cart: Cart = new Cart();
+  idUserCart: number;
 
   constructor(private apiProductService: ApiProductService, private apiCartService: ApiCartService) { }
 
@@ -97,5 +97,24 @@ export class ShopComponent implements OnInit {
 
     sumQty++;
     quantityRow.innerHTML = sumQty.toString();
+  }
+
+  addProductToCart(productId: number) {
+
+    this.apiCartService.getCartByCustomerId(parseInt(this.userSessionId)).subscribe(response => {
+      if (response.status === 200) {
+        this.idUserCart = response.body.id;
+
+        let actualQty = document.getElementById("numProd" + productId).innerHTML;
+
+        const cartDetail: CartDetail = new CartDetail(this.idUserCart, productId, parseInt(actualQty));
+
+        console.log(cartDetail);
+
+        this.apiCartService.addToCartDetail(cartDetail).subscribe(data => {
+          console.log(data)
+        }, error => console.log(error));
+      }
+    }, error => console.log(error));
   }
 }
