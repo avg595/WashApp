@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Customer } from '../customer';
-import { ApiCustomerService } from '../api/api-customer.service';
+import { Customer } from '../../model/customer';
+import { ApiCustomerService } from '../../api/api-customer.service';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit {
   }
 
   saveCustomer() {
+    //TODO: email or username already exists
     this.apiCustomerService.createCustomer(this.customer).subscribe(data => {
       this.showSuccess();
       setTimeout(() => {

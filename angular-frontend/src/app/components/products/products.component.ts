@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../product';
-import { ApiProductService } from '../api/api-product.service';
+import { Product } from '../../model/product';
+import { ApiProductService } from '../../api/api-product.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({

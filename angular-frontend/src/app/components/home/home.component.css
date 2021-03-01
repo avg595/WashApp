@@ -1,6 +1,6 @@
 /******* Home Background *******/
 .overlay{
-    background-image: url("../../assets/images/image3.jpeg");
+    background-image: url("../../../assets/images/image3.jpeg");
     height: 100vh;
     background-position: center;
   	background-repeat: no-repeat;
@@ -8,7 +8,7 @@
 }
 
 .overlay-banner{
-    background-image: url("../../assets/images/water.jpg");
+    background-image: url("../../../assets/images/water.jpg");
     filter: grayscale(65%);
     height: 60vh;
     background-position: center;

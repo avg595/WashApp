@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Customer } from '../customer';
-import { ApiCustomerService } from '../api/api-customer.service';
-import { ApiEmployeeService } from '../api/api-employee.service';
+import { Customer } from '../../model/customer';
+import { ApiCustomerService } from '../../api/api-customer.service';
+import { ApiEmployeeService } from '../../api/api-employee.service';
 import { MessageService } from 'primeng/api';
 
 @Component({

@@ -21,6 +21,10 @@ export class NavbarComponent implements OnInit {
     return this.router.url.includes('home') ? true: false;
   }
 
+  isShopRoute() {
+    return this.router.url.includes('shop') ? true: false;
+  }
+
   isLogged() {
     return this.userSessionId === null ? false : true;
   }

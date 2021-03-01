@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from '../employee';
-import { ApiEmployeeService } from '../api/api-employee.service';
+import { Employee } from '../../model/employee';
+import { ApiEmployeeService } from '../../api/api-employee.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({

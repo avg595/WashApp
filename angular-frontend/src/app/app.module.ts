@@ -6,22 +6,28 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
-import { ShopComponent } from './shop/shop.component';
-import { AdminComponent } from './admin/admin.component';
-import { ProductsComponent } from './products/products.component';
-import { EmployeesComponent } from './employees/employees.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { HomeComponent } from './components/home/home.component';
+import { ShopComponent } from './components/shop/shop.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { ProductsComponent } from './components/products/products.component';
+import { EmployeesComponent } from './components/employees/employees.component';
 
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { FocusTrapModule } from 'primeng/focustrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
+
+const primeNgModules = [
+  DialogModule,
+  ButtonModule,
+  ToastModule,
+  ConfirmDialogModule,
+];
 
 @NgModule({
   declarations: [
@@ -38,14 +44,10 @@ import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    DialogModule,
-    ButtonModule,
-    ToastModule,
-    ConfirmDialogModule,
-    FocusTrapModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ...primeNgModules,
     NgbModule,
     NgxBootstrapIconsModule.pick(allIcons)
   ],

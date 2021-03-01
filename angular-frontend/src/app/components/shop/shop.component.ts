@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../product';
-import { File } from '../file';
-import { ApiProductService } from '../api/api-product.service';
-import { ApiCartService } from '../api/api-cart.service';
-import { CartDetail } from '../model/cart-detail';
+import { Product } from '../../model/product';
+import { File } from '../../model/file';
+import { ApiProductService } from '../../api/api-product.service';
+import { ApiCartService } from '../../api/api-cart.service';
+import { CartDetail } from '../../model/cart-detail';
 
 @Component({
   selector: 'app-shop',

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AdminComponent } from './admin/admin.component';
-import { EmployeesComponent } from './employees/employees.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { ProductsComponent } from './products/products.component';
-import { RegisterComponent } from './register/register.component';
-import { ShopComponent } from './shop/shop.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { EmployeesComponent } from './components/employees/employees.component';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { ProductsComponent } from './components/products/products.component';
+import { RegisterComponent } from './components/register/register.component';
+import { ShopComponent } from './components/shop/shop.component';
 
 import { AuthGuard } from './guards/auth.guard';
 import { ShopGuard } from './guards/shop.guard';
