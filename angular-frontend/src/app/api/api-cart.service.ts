@@ -31,4 +31,20 @@ export class ApiCartService {
   addToCartDetail(cartDetail: CartDetail): Observable<Object>{
     return this.httpClient.post(`${this.baseURL2}`, cartDetail);
   }
+
+  getCartDetailProductList(cartId: number): Observable<CartDetail[]>{
+    return this.httpClient.get<CartDetail[]>(`${this.baseURL2}/${cartId}`);
+  }
+
+  getCartDetailByCartIdAndProductId(cartId: number, productId: number) {
+    return this.httpClient.get<CartDetail>(`${this.baseURL2}/${cartId}/${productId}`, { headers: this.httpHeaders, observe: 'response'});
+  }
+
+  updateCartDetailProduct(id: number, cartDetail: CartDetail): Observable<Object>{
+    return this.httpClient.put(`${this.baseURL2}/${id}`, cartDetail);
+  }
+
+  deleteCartDetailProduct(cartId: number, productId: number): Observable<Object> {
+    return this.httpClient.delete(`${this.baseURL2}/${cartId}/${productId}`);
+  }
 }

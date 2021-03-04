@@ -61,9 +61,30 @@
         <div *ngIf="isShopRoute()" class="dropdown">
             <div class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i-bs name="cart-fill"></i-bs>
+                <span class="bg-info rounded-pill text-white pl-2 pr-2">{{totalProducts}}</span>
             </div>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-              
+            <div class="dropdown-menu dropdown-menu-right cart-dropdown" aria-labelledby="dropdownMenuButton">
+                <div class="row pl-5 pr-5 pt-1 pb-1">
+                    <div class="col-6 text-left">
+                        <i-bs name="cart-fill"></i-bs>
+                        <span class="bg-info rounded-pill text-white pl-2 pr-2">{{totalProducts}}</span>
+                    </div>
+                    <div class="col-6 text-right">Total: {{totalPrice}} €</div>
+                    <div class="col-12"><hr></div>
+                    <ng-template *ngIf="totalProducts === 0; else elseBlock">
+                        <div class="col-12 text-center">Tu carrito esta vaciío :(</div>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <div class="row cart-list">
+                            <ng-container *ngFor="let product of products; let i = index" [ngClass]="cart-list">
+                                <div class="col-10 font-weight-bold">{{product.name}}</div>
+                                <div class="col-2 font-weight-bold delete-product" (click)="deleteProduct(product.id)">X</div>
+                                <div class="col-4 text-info">{{product.price}} €</div>
+                            </ng-container>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block mt-2">Realizar pedido</button>
+                    </ng-template>
+                </div>
             </div>
         </div>
 

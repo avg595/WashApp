@@ -103,17 +103,32 @@ export class ShopComponent implements OnInit {
 
     this.apiCartService.getCartByCustomerId(parseInt(this.userSessionId)).subscribe(response => {
       if (response.status === 200) {
+        let quantitySelected = document.getElementById("numProd" + productId).innerHTML;
+        
         this.idUserCart = response.body.id;
 
-        let actualQty = document.getElementById("numProd" + productId).innerHTML;
+        this.apiCartService.getCartDetailByCartIdAndProductId(response.body.id, productId).subscribe(response => {
+          if (response.status === 200) {
+            let actualQuantity = response.body.quantity;
+            let sumQuantity = actualQuantity + parseInt(quantitySelected);
+            const cartDetailtoUpdate: CartDetail = new CartDetail (response.body.cartId, response.body.productId, sumQuantity);
 
-        const cartDetail: CartDetail = new CartDetail(this.idUserCart, productId, parseInt(actualQty));
+            this.apiCartService.updateCartDetailProduct(response.body.id, cartDetailtoUpdate).subscribe(data => {
+              console.log(data)
+            }, error => console.log(error))
 
-        console.log(cartDetail);
+          }
+        }, error => {
+          if (error.status === 404) {
+            const cartDetail: CartDetail = new CartDetail(this.idUserCart, productId, parseInt(quantitySelected));
 
-        this.apiCartService.addToCartDetail(cartDetail).subscribe(data => {
-          console.log(data)
-        }, error => console.log(error));
+            this.apiCartService.addToCartDetail(cartDetail).subscribe(data => {
+              console.log(data)
+            }, error => console.log(error));
+          } else {
+            console.log(error);
+          }
+        })
       }
     }, error => console.log(error));
   }

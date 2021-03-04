@@ -1,0 +1,16 @@
+::ng-deep .dropdown-toggle::after {
+    display: none!important;
+}
+
+::ng-deep .cart-dropdown {
+    min-width: 20rem;
+}
+
+::ng-deep .cart-list {
+    overflow-y: scroll;
+    max-height: 15rem;
+}
+
+::ng-deep .delete-product {
+    cursor: pointer;
+}
