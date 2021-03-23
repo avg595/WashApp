@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.Cart;
+import net.javaguides.springboot.model.Customer;
 import net.javaguides.springboot.repository.CartRepository;
 
 @RestController
@@ -23,10 +24,10 @@ public class CartController {
 	private CartRepository cartRepository;
 	
 	// create cart rest api
-	@PostMapping("/cart/{customerId}")
-	public ResponseEntity<Cart> createCart(@PathVariable Long customerId) {
+	@PostMapping("/cart")
+	public ResponseEntity<Cart> createCart(@RequestBody Customer customer) {
 		
-		Cart cart = new Cart(customerId);
+		Cart cart = new Cart(customer);
 		
 		cartRepository.save(cart);
 		return ResponseEntity.ok(cart);

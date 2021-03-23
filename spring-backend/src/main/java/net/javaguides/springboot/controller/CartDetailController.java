@@ -42,7 +42,7 @@ public class CartDetailController {
 	}
 	
 	// get cart detail by cart and product id
-	@GetMapping("cartdetail/{cartId}/{productId}")
+	@GetMapping("/cartdetail/{cartId}/{productId}")
 	public ResponseEntity<CartDetail> getCartByCustomerId(@PathVariable Long cartId, @PathVariable Long productId) {
 
 		CartDetail cartDetail = cartDetailRepository.findCartDetailByCartIdAndProductId(cartId, productId)
