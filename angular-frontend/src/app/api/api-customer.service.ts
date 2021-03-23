@@ -12,13 +12,18 @@ export class ApiCustomerService {
   private baseURL2 = "http://localhost:8080/api/v2/customer";
 
   constructor(private httpClient: HttpClient) { }
+   
+  httpHeaders = new HttpHeaders();
 
-  createCustomer(customer: Customer): Observable<Object>{
-    return this.httpClient.post(`${this.baseURL}`, customer);
+  createCustomer(customer: Customer) {
+    return this.httpClient.post(`${this.baseURL}`, customer, { headers: this.httpHeaders, observe: 'response'});
+  }
+
+  getCustomerById(id: number): Observable<Customer> {
+    return this.httpClient.get<Customer>(`${this.baseURL}/${id}`);
   }
 
   getCustomerByEmail(email: string) {
-    const httpHeaders = new HttpHeaders();
-    return this.httpClient.get<Customer>(`${this.baseURL2}/${email}`, { headers: httpHeaders, observe: 'response'});
+    return this.httpClient.get<Customer>(`${this.baseURL2}/${email}`, { headers: this.httpHeaders, observe: 'response'});
   }
 }

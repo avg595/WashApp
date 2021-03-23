@@ -18,25 +18,36 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onSubmit(data) {
+    this.saveCustomer();
+  }
+
   saveCustomer() {
-    //TODO: email or username already exists
-    this.apiCustomerService.createCustomer(this.customer).subscribe(data => {
-      this.showSuccess();
-      setTimeout(() => {
-        this.goToHome();
-      }, 1000);
-    }, error => console.log(error));
+    this.apiCustomerService.createCustomer(this.customer).subscribe(response => {
+      if (response.status === 200) {
+        this.showSuccess();
+          setTimeout(() => {
+            this.goToHome();
+          }, 1000);
+      } 
+    }, error => {
+      if (error.status === 500) {
+        this.showError();
+      } else {
+        console.log(error);
+      }
+    })
   }
 
   goToHome() {
     this.router.navigate(['/home']);
   }
 
-  onSubmit(data) {
-    this.saveCustomer();
-  }
-
   showSuccess() {
     this.messageService.add({severity:'success', summary: 'Success', detail: 'Register ok'});
+  }
+
+  showError() {
+    this.messageService.add({severity:'error', summary: 'Error', detail: 'User already exists'});
   }
 }

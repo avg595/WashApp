@@ -76,10 +76,11 @@
                     </ng-template>
                     <ng-template #elseBlock>
                         <div class="row cart-list">
-                            <ng-container *ngFor="let product of products; let i = index" [ngClass]="cart-list">
-                                <div class="col-10 font-weight-bold">{{product.name}}</div>
-                                <div class="col-2 font-weight-bold delete-product" (click)="deleteProduct(product.id)">X</div>
-                                <div class="col-4 text-info">{{product.price}} €</div>
+                            <ng-container *ngFor="let cdProduct of cartDetailProducts; let i = index" [ngClass]="cart-list">
+                                <div class="col-10 font-weight-bold">{{cdProduct.product.name}}</div>
+                                <div class="col-2 font-weight-bold delete-product" (click)="deleteProduct(cdProduct.product.id)">X</div>
+                                <div class="col-4 text-info">{{cdProduct.product.price}} €</div>
+                                <div class="col-8 text-secondary">Cantidad: {{cdProduct.quantity}}</div>
                             </ng-container>
                         </div>
                         <button type="button" class="btn btn-primary btn-block mt-2">Realizar pedido</button>

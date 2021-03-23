@@ -58,28 +58,14 @@ export class NavbarComponent implements OnInit {
           this.cartDetailProducts = data;
           this.totalProducts = data.length;
 
-          this.getCartProductList();
-
         }, error => console.log(error))
       } 
     }, error => console.log(error));
   }
 
-  getCartProductList() {
-    this.cartDetailProducts.forEach(cd => {
-      
-      this.apiProductService.getProductById(cd.productId).subscribe(data => {
-        this.products.push(data)
-      }, error => console.log(error));
-    });
-  }
-
   deleteProduct(productId: number) {
-    console.log(this.idUserCart)
-    console.log(productId)
-
     this.apiCartService.deleteCartDetailProduct(this.idUserCart, productId).subscribe(data => {
-      console.log("deleted")
+      //console.log("deleted")
     })
   }
 }

@@ -3,7 +3,10 @@ import { Product } from '../../model/product';
 import { File } from '../../model/file';
 import { ApiProductService } from '../../api/api-product.service';
 import { ApiCartService } from '../../api/api-cart.service';
+import { ApiCustomerService } from 'src/app/api/api-customer.service';
 import { CartDetail } from '../../model/cart-detail';
+import { Customer } from 'src/app/model/customer';
+import { Cart } from 'src/app/model/cart';
 
 @Component({
   selector: 'app-shop',
@@ -14,15 +17,20 @@ export class ShopComponent implements OnInit {
 
   userSessionId: string = sessionStorage.getItem('id');
   
+  product: Product;
   products: Product[];
   images: File[];
+  cart: Cart;
 
   retrievedImage: any;
   base64Data: any;
 
   idUserCart: number;
 
-  constructor(private apiProductService: ApiProductService, private apiCartService: ApiCartService) { }
+  customer: Customer = new Customer();
+
+  constructor(private apiProductService: ApiProductService, private apiCartService: ApiCartService,
+              private apiCustomerService: ApiCustomerService) { }
 
   ngOnInit(): void {
     if (sessionStorage.getItem('reload') === 'no reload') {
@@ -51,22 +59,26 @@ export class ShopComponent implements OnInit {
   }
 
   private checkIfUserCartExists() {
-    this.apiCartService.getCartByCustomerId(parseInt(this.userSessionId)).subscribe(response => {
-      if (response.status === 200) {
-        /* console.log("tiene carro") */
-      }
-    }, error => {
-      if (error.status === 404) {
-        this.createUserCart();
-      } else {
-        console.log(error);
-      }
-    })
+    this.apiCustomerService.getCustomerById(parseInt(this.userSessionId)).subscribe(data => {
+      this.customer = data;
+
+      this.apiCartService.getCartByCustomerId(parseInt(this.userSessionId)).subscribe(response => {
+        if (response.status === 200) {
+          //console.log("user cart exists")
+        }
+      }, error => {
+        if (error.status === 404) {
+          this.createUserCart(this.customer);
+        } else {
+          console.log(error);
+        }
+      })
+    }, error => console.log(error));
   }
 
-  private createUserCart() {
-    this.apiCartService.createCart(parseInt(this.userSessionId)).subscribe(response => {
-      /* console.log(response) */
+  private createUserCart(customer: Customer) {
+    this.apiCartService.createCart(customer).subscribe(data => {
+      //console.log("cart created")
     }, error => console.log(error));
   }
 
@@ -100,34 +112,35 @@ export class ShopComponent implements OnInit {
   }
 
   addProductToCart(productId: number) {
-
     this.apiCartService.getCartByCustomerId(parseInt(this.userSessionId)).subscribe(response => {
       if (response.status === 200) {
         let quantitySelected = document.getElementById("numProd" + productId).innerHTML;
+        this.cart = response.body;
+
+        this.apiProductService.getProductById(productId).subscribe(data => {
+          this.product = data;
         
-        this.idUserCart = response.body.id;
+          const cartDetail: CartDetail = new CartDetail(this.cart, this.product, parseInt(quantitySelected));
+          
+          this.apiCartService.getCartDetailByCartIdAndProductId(cartDetail).subscribe(response => {
+            if (response.status === 200) {
+              let actualQuantity = response.body.quantity;
+              let sumQuantity = actualQuantity + parseInt(quantitySelected);
+              const cartDetailtoUpdate: CartDetail = new CartDetail (response.body.cart, response.body.product, sumQuantity);
 
-        this.apiCartService.getCartDetailByCartIdAndProductId(response.body.id, productId).subscribe(response => {
-          if (response.status === 200) {
-            let actualQuantity = response.body.quantity;
-            let sumQuantity = actualQuantity + parseInt(quantitySelected);
-            const cartDetailtoUpdate: CartDetail = new CartDetail (response.body.cartId, response.body.productId, sumQuantity);
-
-            this.apiCartService.updateCartDetailProduct(response.body.id, cartDetailtoUpdate).subscribe(data => {
-              console.log(data)
-            }, error => console.log(error))
-
-          }
-        }, error => {
-          if (error.status === 404) {
-            const cartDetail: CartDetail = new CartDetail(this.idUserCart, productId, parseInt(quantitySelected));
-
-            this.apiCartService.addToCartDetail(cartDetail).subscribe(data => {
-              console.log(data)
-            }, error => console.log(error));
-          } else {
-            console.log(error);
-          }
+              this.apiCartService.updateCartDetailProduct(response.body.id, cartDetailtoUpdate).subscribe(data => {
+                console.log(data)
+              }, error => console.log(error))
+            } 
+          }, error => {
+            if (error.status === 404) {
+              this.apiCartService.addToCartDetail(cartDetail).subscribe(data => {
+                console.log(data)
+              }, error => console.log(error));
+            } else {
+              console.log(error);
+            }
+          })
         })
       }
     }, error => console.log(error));

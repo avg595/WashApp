@@ -1,12 +1,15 @@
+import { Cart } from './cart';
+import { Product } from './product';
+
 export class CartDetail {
     id: number;
-    cartId: number;
-    productId: number;
+    cart: Cart;
+    product: Product;
     quantity: number;
 
-    constructor(cartId: number, productId: number, quantity: number) {
-        this.cartId = cartId;
-        this.productId = productId;
+    constructor(cart: Cart, product: Product, quantity: number) {
+        this.cart = cart;
+        this.product = product;
         this.quantity = quantity;
     }
 }
