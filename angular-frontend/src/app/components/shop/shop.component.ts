@@ -44,6 +44,7 @@ export class ShopComponent implements OnInit {
 
 
     this.checkIfUserCartExists();
+    
   }
 
   private getProducts() {

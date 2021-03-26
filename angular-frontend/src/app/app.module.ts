@@ -21,6 +21,7 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
+import { CartDetailComponent } from './components/shop/cart-detail/cart-detail.component';
 
 const primeNgModules = [
   DialogModule,
@@ -39,7 +40,8 @@ const primeNgModules = [
     ShopComponent,
     AdminComponent,
     ProductsComponent,
-    EmployeesComponent
+    EmployeesComponent,
+    CartDetailComponent
   ],
   imports: [
     BrowserModule,
