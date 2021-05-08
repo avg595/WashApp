@@ -1,29 +1,28 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { ApiCartService } from 'src/app/api/api-cart.service';
 import { CartDetail } from 'src/app/model/cart-detail';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-cart-detail',
-  templateUrl: './cart-detail.component.html',
-  styleUrls: ['./cart-detail.component.css']
+  selector: 'app-order',
+  templateUrl: './order.component.html',
+  styleUrls: ['./order.component.css']
 })
-export class CartDetailComponent implements OnInit, OnDestroy {
-
-  @Output() cartTotalProducts = new EventEmitter();
+export class OrderComponent implements OnInit {
 
   userSessionId: string = sessionStorage.getItem('id');
 
-  totalProducts: number = 0;
-  totalPrice: number = 0;
   idUserCart: number;
 
   cartDetailProducts: CartDetail [];
 
-  constructor(private apiCartService: ApiCartService) {}
+  totalPrice: number = 0;
+
+  constructor(private apiCartService: ApiCartService, private router: Router) { }
 
   ngOnInit(): void {
     this.apiCartService.refreshNeeded$.subscribe(() => {
+      this.totalPrice = 0;
       this.getCartDetail();
     });
 
@@ -38,10 +37,7 @@ export class CartDetailComponent implements OnInit, OnDestroy {
 
         this.apiCartService.getCartDetailProductList(this.idUserCart).subscribe(data => {
           this.cartDetailProducts = data;
-          this.totalProducts = data.length;
-
-          this.cartTotalProducts.emit(this.totalProducts);
-
+          this.setTotalPrice();
         }, error => console.log(error))
       } 
     }, error => console.log(error));
@@ -49,11 +45,23 @@ export class CartDetailComponent implements OnInit, OnDestroy {
 
   deleteProduct(productId: number) {
     this.apiCartService.deleteCartDetailProduct(this.idUserCart, productId).subscribe(data => {
-      this.getCartDetail();
+      //this.getCartDetail();
     })
+
+    if (this.cartDetailProducts.length - 1 === 0) {
+      this.router.navigate(['/shop']);
+    }
   }
- 
-  ngOnDestroy() {
-    //this.apiCartService.refreshNeeded$.unsubscribe();
+
+  setTotalPrice() {
+    this.cartDetailProducts.forEach(cdProduct => {
+      this.totalPrice += cdProduct.product.price * cdProduct.quantity;
+    });
+  }
+
+  deleteAllProducts() {
+    this.apiCartService.deleteCartDetailProducts(this.idUserCart).subscribe(data => {
+      this.router.navigate(['/shop']);
+    })
   }
 }

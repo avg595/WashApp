@@ -7,7 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,7 +21,7 @@ public class CartDetail {
     @JoinColumn(name = "FK_CART", referencedColumnName = "id", nullable = false)
 	private Cart cart;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "FK_PRODUCT", referencedColumnName = "id", nullable = false)
 	private Product product;
 	

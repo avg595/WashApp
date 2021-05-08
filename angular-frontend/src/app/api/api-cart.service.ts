@@ -75,4 +75,8 @@ export class ApiCartService {
       })
     );
   }
+
+  deleteCartDetailProducts(cartId: number): Observable<Object>{
+    return this.httpClient.delete(`${this.baseURL2}/${cartId}`);
+  }
 }

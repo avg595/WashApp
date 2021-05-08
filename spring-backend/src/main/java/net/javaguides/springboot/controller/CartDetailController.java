@@ -1,8 +1,11 @@
 package net.javaguides.springboot.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +76,28 @@ public class CartDetailController {
 		cartDetailRepository.delete(cartDetailProduct);
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
+		return ResponseEntity.ok(response);
+	}
+	
+	@Transactional
+	@DeleteMapping("/cartdetail/{cartId}")
+	public ResponseEntity<Map<String, Boolean>> deleteCartDetailProducts(@PathVariable Long cartId){
+		
+//		List<CartDetail> cartList = cartDetailRepository.findCartDetailByCartId(cartId);
+//		Map<String, Boolean> response = new HashMap<>();
+//		
+//		for (CartDetail cartDetailProduct : cartList) {
+//			cartDetailRepository.delete(cartDetailProduct);
+//			response.put("deleted", Boolean.TRUE);
+//		}
+		
+		Map<String, Boolean> response = new HashMap<>();
+		
+		int deleted = cartDetailRepository.deleteByCartId(cartId);
+		if (deleted > 0) {
+			response.put("deleted", Boolean.TRUE);
+		}
+		
 		return ResponseEntity.ok(response);
 	}
 }

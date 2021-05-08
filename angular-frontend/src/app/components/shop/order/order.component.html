@@ -1,0 +1,49 @@
+<div class="container mt-5 pt-5">
+    <div class="row pt-5">
+        <div class="col-8 shadow">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let cdProduct of cartDetailProducts">
+                        <tr>
+                            <td>{{cdProduct.product.name}}</td>
+                            <td>{{cdProduct.product.price}} €/u</td>
+                            <td>{{cdProduct.quantity}}</td>
+                            <td>{{cdProduct.product.price * cdProduct.quantity}} €</td>
+                            <td class="font-weight-bold delete-product" (click)="deleteProduct(cdProduct.product.id)">X</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+
+            <div class="row pb-3">
+                <div class="col-6 d-flex justify-content-end">
+                    <a routerLink="../shop" routerLinkActive="active" 
+                    class="btn btn-primary mt-2 text-white" role="button">Volver a tienda</a>
+                </div>
+                <div class="col-6 d-flex justify-content-start">
+                    <button type="button" class="btn btn-primary mt-2" (click)="deleteAllProducts()">Vaciar cesta</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3 ml-5 shadow d-flex align-items-center">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <span class="font-weight-bold">Total: </span>{{totalPrice}} €
+                </div>
+                <div class="col-12">
+                    <button type="button" class="btn btn-block btn-primary mt-2">Realizar pago</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,4 +12,6 @@ import net.javaguides.springboot.model.CartDetail;
 public interface CartDetailRepository extends JpaRepository<CartDetail, Long>{
 	List<CartDetail> findByCartId(Long cartId);
 	Optional<CartDetail> findCartDetailByCartIdAndProductId(Long cartId, Long productId);
+	//List<CartDetail> findCartDetailByCartId(Long cartId);	
+	int deleteByCartId(Long cartId);
 }
